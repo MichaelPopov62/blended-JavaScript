@@ -1,0 +1,1 @@
+let l=["jazz","blues"];l.push("rock-n-roll");console.log(l);const s=l.indexOf("blues");s!==-1&&l.splice(s,1,"classic");console.log(l);function n(e){for(let o=0;o<e.length;o++)console.log(`${o+1} - ${e[o]}`)}n(l);
