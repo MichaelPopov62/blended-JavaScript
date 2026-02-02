@@ -1,21 +1,21 @@
-import'./js/lesson-1.js';
+
+
 import './css/styles.css';
 
+async function loadLessons() {
+  const loads = document.querySelectorAll('load');
 
-// Підтягуємо усі load-елементи
-document.querySelectorAll('load').forEach(async (el) => {
-  // Використовуємо відносний шлях, щоб працювало на GitHub Pages
-  const src = el.getAttribute('src');
-  if (!src) return;
-
-  try {
-    // Підтягуємо HTML відносно місця виклику
-    const res = await fetch(`./${src}`);
-    if (!res.ok) throw new Error(`Не вдалося завантажити ${src}`);
+  for (const el of loads) {
+    const src = el.getAttribute('src');
+    const res = await fetch(src);
     const html = await res.text();
-    el.outerHTML = html; // замінюємо <load> на контент
-  } catch (err) {
-    console.error(err);
-    el.outerHTML = `<p>Помилка завантаження ${src}</p>`;
+
+    el.outerHTML = html;
   }
-});
+
+  // ⬇️ тут JS запускається ПІСЛЯ того, як HTML уже в DOM
+  await import('./js/lesson-1.js');
+  await import('./js/lesson-2.js');
+}
+
+loadLessons();
