@@ -29,6 +29,27 @@ ul {
   margin: 0;
   padding: 0;
 }
+.header-wrap{
+  display: flex;
+  justify-content: center;
+}
+.nav-list{
+  display: flex;
+  justify-content: center;
+}
+
+.lesson-link.active {
+  cursor: pointer;
+  padding: 8px 12px;
+  color: blue;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+li[data-lesson]:hover {
+  background-color: aqua;
+}
+
 .lesson-title{
   font-family: Arial, Helvetica, sans-serif;
   background-color: rgb(237, 137, 137);

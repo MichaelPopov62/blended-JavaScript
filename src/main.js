@@ -2,20 +2,26 @@
 
 import './css/styles.css';
 
-async function loadLessons() {
-  const loads = document.querySelectorAll('load');
+const container = document.getElementById('lesson-container');
 
-  for (const el of loads) {
-    const src = el.getAttribute('src');
-    const res = await fetch(src);
-    const html = await res.text();
+async function loadLesson(n) {
+  // 1. завантажуємо HTML уроку
+  const html = await fetch(`partials/lesson-${n}.html`).then(r => r.text());
 
-    el.outerHTML = html;
-  }
+  // 2. замінюємо контент
+  container.innerHTML = html;
 
-  // ⬇️ тут JS запускається ПІСЛЯ того, як HTML уже в DOM
-  await import('./js/lesson-1.js');
-  await import('./js/lesson-2.js');
+  // 3. підключаємо JS логіку уроку
+  await import(`./js/lesson-${n}.js`);
 }
 
-loadLessons();
+// кліки по списку
+document.getElementById('lesson-list').addEventListener('click', e => {
+  const item = e.target.closest('[data-lesson]');
+  if (!item) return;
+
+  loadLesson(item.dataset.lesson);
+});
+
+// стартовий урок
+loadLesson(1);
